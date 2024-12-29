@@ -1,0 +1,54 @@
+
+CREATE DATABASE UniversityDB;
+USE UniversityDB;
+
+
+CREATE TABLE Faculty (
+    FacultyID INT PRIMARY KEY, 
+    FacultyName NVARCHAR(100) NOT NULL 
+);
+
+
+CREATE TABLE Major (
+    MajorID INT PRIMARY KEY,   
+    FacultyID INT NOT NULL,   
+    Name NVARCHAR(100) NOT NULL,
+    CONSTRAINT FK_Major_Faculty FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID)
+);
+
+
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,  
+    FullName NVARCHAR(100) NOT NULL,
+    AverageScore FLOAT,          
+    FacultyID INT NOT NULL,    
+    MajorID INT NOT NULL,
+    Avatar NVARCHAR(255),        
+    CONSTRAINT FK_Student_Faculty FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
+    CONSTRAINT FK_Student_Major FOREIGN KEY (MajorID) REFERENCES Major(MajorID)
+);
+
+
+INSERT INTO Faculty (FacultyID, FacultyName)
+VALUES
+    (1, N'CNTT'),
+    (2, N'NNA'),
+    (3, N'QTKD');
+
+
+INSERT INTO Major (MajorID, FacultyID, Name)
+VALUES
+    (1, 1, N'Công nghệ phần mềm'),
+    (2, 2, N'Tiếng Anh Thương Mại'),
+    (3, 1, N'Hệ thống thông tin'),
+    (4, 2, N'Tiếng Anh Truyền Thông'),
+    (5, 1, N'An toàn thông tin');
+
+
+INSERT INTO Student (StudentID, FullName, AverageScore, FacultyID, MajorID, Avatar)
+VALUES
+    (1, N'Nguyễn Văn A', 8.5, 1, 1, N'avatar1.jpg'),
+    (2, N'Lê Thị B', 7.8, 2, 2, N'avatar2.jpg'),
+    (3, N'Trần Văn C', 9.0, 1, 3, N'avatar3.jpg'),
+    (4, N'Phạm Thị D', 6.5, 2, 4, N'avatar4.jpg'),
+    (5, N'Hồ Quang E', 7.2, 1, 5, N'avatar5.jpg');
